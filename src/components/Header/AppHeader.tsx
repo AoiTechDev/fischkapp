@@ -5,8 +5,8 @@ interface AppHeaderProps {
   cardsAmount: number;
 }
 
-export const AppHeader = () => {
-  const [cardsCounter, setCardsCounter] = useState<AppHeaderProps>({cardsAmount: 1});
+export const AppHeader = ({cardsAmount=1}:AppHeaderProps) => {
+ 
   return (
     <header className={styles.header}>
       <div className={styles.header__left}>
@@ -30,7 +30,7 @@ export const AppHeader = () => {
             />
           </svg>
         </div>
-        <div>Cards: {cardsCounter.cardsAmount}</div>
+        <div>Cards: {cardsAmount}</div>
       </div>
       <button className={styles.header__button}>+</button>
     </header>
