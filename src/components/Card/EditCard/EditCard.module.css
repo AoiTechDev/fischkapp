@@ -1,0 +1,37 @@
+.card__container {
+    width: 100%;
+    height: 11.75rem;
+    background-color: var(--white);
+    border-radius: 0.94rem;
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    position: relative;
+    padding: 0.88rem;
+}
+.card__button_container {
+    display: flex;
+}
+
+.card__input {
+    position: absolute;
+    top: 3.13rem;
+    width: 92%;
+    height: 2.5rem;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 0.75rem 0.66rem;
+    border: 1px solid var(--border)
+}
+.card__smallText {
+   position: absolute;
+    top: calc(3.13rem - 1.25rem);
+    left: 0.88rem;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
