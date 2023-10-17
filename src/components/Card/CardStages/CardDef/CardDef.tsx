@@ -1,29 +1,29 @@
 import React, { useContext } from "react";
 import Trashcan from "../../Icons/Trashcan/Trashcan";
-import styles from './CardDef.module.css';
+import styles from "./CardDef.module.css";
 import { CardContext } from "../../../../context/StateContext";
 import Button from "../../../Button/Button";
 interface Card {
-    id: number;
-    word: string;
-    definition: string;
-    isEdited: boolean;
-  }
+  id: number;
+  word: string;
+  definition: string;
+  isEdited: boolean;
+}
 
-  interface Props{
-    card: Card;
-    toggle: React.MouseEventHandler<HTMLButtonElement>;
-    buttonEvent: React.MouseEventHandler<HTMLButtonElement>;
-    defValue: string;
-    wordValue: string;
-    onChange: React.ChangeEventHandler<HTMLInputElement>;
-  }
+interface Props {
+  card?: Card;
+  toggle: React.MouseEventHandler<HTMLButtonElement>;
+  buttonEvent: React.MouseEventHandler<HTMLButtonElement>;
+  defValue: string;
+  wordValue: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+}
 const CardDef = (props: Props) => {
-    const {card, } = useContext(CardContext);
+  const { card, cards } = useContext(CardContext);
   return (
     <>
       <>
-        <Trashcan />
+        <Trashcan index={props?.card?.id!} />
         <p className={styles.card__smallText}>{props.wordValue}</p>
         <input
           name="definition"
@@ -35,11 +35,7 @@ const CardDef = (props: Props) => {
 
       <div>
         <div className={styles.card__button_container}>
-          <Button
-            label="Back"
-            color="white"
-            event={props.toggle}
-          />
+          <Button label="Back" color="white" event={props.toggle} />
           <Button
             label="Save"
             color="var(--accent)"
