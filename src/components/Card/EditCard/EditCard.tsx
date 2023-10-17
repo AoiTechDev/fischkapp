@@ -39,34 +39,88 @@ const EditCard = () => {
 
   return (
     <div className={styles.card__container}>
-      
+      {(() => {
+        switch (innerCardState) {
+          case "CARD_WORD":
+            return (
+              <>
+                <input
+                  name="word"
+                  value={cardData.word}
+                  onChange={cardDataHandler}
+                  className={styles.card__input}
+                />
+                <div>
+                  <div className={styles.card__button_container}>
+                    <Button
+                      label="Cancel"
+                      color="white"
+                      event={() => toggleCardState("")}
+                    />
+                    <Button
+                      label="Next"
+                      color="var(--accent)"
+                      event={() => toggleInnerCardState("CARD_DEF")}
+                    />
+                  </div>
+                </div>
+              </>
+            );
+
+          case "CARD_DEF":
+            return (
+              <>
+                <>
+                  <Trashcan />
+                  <p className={styles.card__smallText}>{cardData.word}</p>
+                  <input
+                    name="definition"
+                    value={cardData.definition}
+                    onChange={cardDataHandler}
+                    className={styles.card__input}
+                  />
+                </>
+
+                <div>
+                  <div className={styles.card__button_container}>
+                    <Button
+                      label="Back"
+                      color="white"
+                      event={() => toggleInnerCardState("CARD_WORD")}
+                    />
+                    <Button
+                      label="Save"
+                      color="var(--accent)"
+                      event={() => addCard(cardData)}
+                    />
+                  </div>
+                </div>
+              </>
+            );
+        }
+      })()}
+      {/* 
       {innerCardState === "CARD_WORD" ? (
-       
-         
-          <input
-            name="word"
-            value={cardData.word}
-            onChange={cardDataHandler}
-            className={styles.card__input}
-          />
-  
+        <input
+          name="word"
+          value={cardData.word}
+          onChange={cardDataHandler}
+          className={styles.card__input}
+        />
       ) : innerCardState === "CARD_DEF" ? (
-      
-       <>
-       <Trashcan />
-       <p className={styles.card__smallText}>{cardData.word}</p>
-         <input
+        <>
+          <Trashcan />
+          <p className={styles.card__smallText}>{cardData.word}</p>
+          <input
             name="definition"
             value={cardData.definition}
             onChange={cardDataHandler}
             className={styles.card__input}
           />
-       </>
-        
-       
-      ) : null}
+        </>
+      ) : null} */}
 
-      <div>
+      {/* <div>
         <div className={styles.card__button_container}>
           <Button
             label={innerCardState === "CARD_WORD" ? "Cancel" : "Back"}
@@ -87,7 +141,7 @@ const EditCard = () => {
             }
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
