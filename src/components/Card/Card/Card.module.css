@@ -1,0 +1,16 @@
+.card__container {
+    width: 100%;
+    height: 11.75rem;
+    background-color: var(--white);
+    border-radius: 0.94rem;
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 0.88rem;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

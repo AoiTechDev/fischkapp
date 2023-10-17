@@ -16,3 +16,16 @@ body {
   --typo:#b6b6b6;
   --border:#ebebec;
 }
+main{
+  padding: 1rem;
+}
+.empty{
+  color: var(--typo);
+}
+.card_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  flex-direction: column;
+}
