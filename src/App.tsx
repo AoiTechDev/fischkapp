@@ -21,8 +21,8 @@ function App(): React.JSX.Element {
             case "CARD_ADDED":
               return (
                 <div className="card_container">
-                  {cards.toReversed().map((card, index) => (
-                    <Card card={card} key={index} />
+                  {cards.toReversed().map((card) => (
+                    <Card card={card} key={card.id} />
                   ))}
                 </div>
               );
@@ -32,8 +32,8 @@ function App(): React.JSX.Element {
                 <p className="empty">Add your first flashcard</p>
               ) : (
                 <div className="card_container">
-                  {cards.toReversed().map((card, index) => (
-                    <Card card={card} key={index} />
+                  {cards.toReversed().map((card) => (
+                    <Card card={card} key={card.id} />
                   ))}
                 </div>
               );
