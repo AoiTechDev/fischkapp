@@ -1,8 +1,20 @@
 import { useContext } from "react";
 import { CardContext } from "../../../../context/StateContext";
 import styles from "./Pen.module.css";
-const Pen = () => {
-    const {card, setCard} = useContext(CardContext)
+
+
+interface Card {
+  id: number;
+  word: string;
+  definition: string;
+  isEdited: boolean;
+}
+
+interface Props{
+  card: Card
+}
+const Pen = (props: Props) => {
+    const {updateCard} = useContext(CardContext)
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,6 +23,7 @@ const Pen = () => {
       viewBox="0 0 41 40"
       fill="none"
       className={styles.pen}
+      onClick={() => updateCard(props.card, true)}
     >
       <path
         fill-rule="evenodd"
