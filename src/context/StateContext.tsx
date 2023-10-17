@@ -56,7 +56,6 @@ export default function CardProvider({ children }: { children: ReactNode }) {
   const [cardState, setCardState] = useState<string>("");
   const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
 
-
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
   };
@@ -76,6 +75,8 @@ export default function CardProvider({ children }: { children: ReactNode }) {
         [e.target.name]: e.target.value,
       };
     });
+
+    
   };
   const editCardHandler = (
     card: Card,
@@ -84,7 +85,7 @@ export default function CardProvider({ children }: { children: ReactNode }) {
     const { name, value } = e.target;
 
     const existingCardIndex = cards.findIndex((c) => c.id === card.id);
-   
+
     if (existingCardIndex >= 0) {
       // Card exists, update it
       const updatedCards = [...cards];

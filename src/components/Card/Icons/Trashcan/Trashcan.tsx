@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Trashcan.module.css";
-const Trashcan = () => {
+import { CardContext } from "../../../../context/StateContext";
+
+interface Props{
+  index: number
+}
+
+const Trashcan = (props: Props) => {
+  const {removeCard} = useContext(CardContext)
   return (
     <svg
       width="40"
@@ -9,6 +16,7 @@ const Trashcan = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={styles.trashcan}
+      onClick={() => {removeCard(props.index)}}
     >
       <path d="M25 15.5H15" stroke="#161616" stroke-linecap="round" />
       <path d="M22 15H18" stroke="#161616" stroke-linecap="round" />

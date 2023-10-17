@@ -1,24 +1,26 @@
 import React, { useContext } from "react";
-import styles from './CardWord.module.css';
+import styles from "./CardWord.module.css";
 import { CardContext } from "../../../../context/StateContext";
 import Button from "../../../Button/Button";
+import Trashcan from "../../Icons/Trashcan/Trashcan";
 
 interface Card {
-    id: number;
-    word: string;
-    definition: string;
-    isEdited: boolean;
-  }
+  id: number;
+  word: string;
+  definition: string;
+  isEdited: boolean;
+}
 
-interface Props{
-    card: Card,
-    toggle: React.MouseEventHandler<HTMLButtonElement>;
-    wordValue: string;
-    onChange: React.ChangeEventHandler<HTMLInputElement>;
-    
+interface Props {
+  card?: Card;
+  toggle: React.MouseEventHandler<HTMLButtonElement>;
+  wordValue: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  cancel: React.MouseEventHandler<HTMLButtonElement>;
 }
 const CardWord = (props: Props) => {
-    const {cards, card, toggleCardState,toggleInnerCardState, updateCard} = useContext(CardContext);
+  const { cards, card, toggleCardState, toggleInnerCardState, updateCard } =
+    useContext(CardContext);
 
   return (
     <>
@@ -33,13 +35,9 @@ const CardWord = (props: Props) => {
           <Button
             label="Cancel"
             color="white"
-            event={() => updateCard(props?.card, false)}
+            event={props.cancel}
           />
-          <Button
-            label="Next"
-            color="var(--accent)"
-            event={props.toggle}
-          />
+          <Button label="Next" color="var(--accent)" event={props.toggle} />
         </div>
       </div>
     </>

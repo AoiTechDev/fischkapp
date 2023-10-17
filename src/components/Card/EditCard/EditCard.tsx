@@ -16,7 +16,7 @@ interface Card {
 }
 const EditCard = () => {
   const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
-  const { card, addCard , newCardHandler} = useContext(CardContext);
+  const { card, addCard, newCardHandler ,toggleCardState} = useContext(CardContext);
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
   };
@@ -31,12 +31,14 @@ const EditCard = () => {
                 toggle={() => toggleInnerCardState("CARD_DEF")}
                 wordValue={card.word}
                 onChange={newCardHandler}
+                cancel={() => toggleCardState("")}
               />
             );
 
           case "CARD_DEF":
             return (
               <CardDef
+              
                 toggle={() => toggleInnerCardState("CARD_WORD")}
                 buttonEvent={() => addCard(card)}
                 defValue={card.definition}

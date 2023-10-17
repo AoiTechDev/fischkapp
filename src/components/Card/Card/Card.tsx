@@ -43,12 +43,14 @@ const Card = (props: Props) => {
                   toggle={() => toggleInnerCardState("CARD_DEF")}
                   wordValue={props.card.word}
                   onChange={(e) => editCardHandler(props.card, e)}
+                  cancel={() => updateCard(props?.card!, false)}
                 />
               );
 
             case "CARD_DEF":
               return (
                 <CardDef
+                card={props.card}
                   toggle={() => toggleInnerCardState("CARD_WORD")}
                   buttonEvent={() => {
                     toggleInnerCardState("CARD_WORD");
