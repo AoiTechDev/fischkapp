@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  LegacyRef,
+} from "react";
 import styles from "./NewCard.module.css";
 import Pen from "../Icons/Pen/Pen";
 import { CardContext } from "../../../context/StateContext";
@@ -19,6 +25,9 @@ interface Props {
 const NewCard = (props: Props) => {
   const { cards, updateCard, editCardHandler } = useContext(CardContext);
 
+  const cardRef = useRef<HTMLDivElement>(null);
+  const phraseRef = useRef<HTMLParagraphElement>(null);
+
   const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
 
   const toggleInnerCardState = (state: string) => {
@@ -26,18 +35,12 @@ const NewCard = (props: Props) => {
   };
 
   const cardFlipHandler = (id: number) => {
-    const card = document.querySelectorAll(`.card`);
-    const phrase = document.querySelectorAll(`.card .card__phrase`);
-
-    console.log(card[id]);
-    card.forEach((item) => item.classList.remove(styles.card_flip_animation));
-    phrase.forEach((item) =>
-      item.classList.remove(styles.card_phrase_animation)
-    );
+    cardRef.current?.classList.remove(styles.card_flip_animation);
+    phraseRef.current?.classList.remove(styles.card_phrase_animation);
 
     setTimeout(() => {
-      card[id].classList.add(styles.card_flip_animation);
-      card[id].children[1].classList.add(styles.card_phrase_animation);
+      cardRef.current?.classList.add(styles.card_flip_animation);
+      cardRef.current?.children[1].classList.add(styles.card_phrase_animation);
     }, 10);
 
     setTimeout(() => {
@@ -47,15 +50,15 @@ const NewCard = (props: Props) => {
 
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
 
-  useEffect(() => {});
   return (
     <div
-      className={`${
+      className={
         !props.card.isEdited
           ? styles.card__container
           : styles.card__container_edit
-      } card`}
+      }
       onClick={() => cardFlipHandler(props.index)}
+      ref={cardRef}
     >
       {!props.card.isEdited ? <Pen card={props.card} /> : null}
 
@@ -90,7 +93,7 @@ const NewCard = (props: Props) => {
           }
         })()
       ) : (
-        <p className="card__phrase">
+        <p ref={phraseRef}>
           {isFlipped ? props.card.word : props.card.definition}
         </p>
       )}

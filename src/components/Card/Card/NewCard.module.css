@@ -28,9 +28,6 @@
     padding: 0.88rem;
 }
 
-.no_animation {
-    animation: none;
-}
 
 .card_flip_animation {
     animation: flip 0.7s ease !important;
