@@ -36,7 +36,10 @@ const defaultValue: CardContextValue = {
 
   editCardHandler: () => {},
   newCardHandler: () => {},
-  cards: [],
+  cards: [
+    { id: 0, word: "fish", definition: "ryba", isEdited: false },
+    { id: 1, word: "dog", definition: "pies", isEdited: false },
+  ],
   addCard: () => {},
   removeCard: () => {},
   updateCard: () => {},
@@ -75,8 +78,6 @@ export default function CardProvider({ children }: { children: ReactNode }) {
         [e.target.name]: e.target.value,
       };
     });
-
-    
   };
   const editCardHandler = (
     card: Card,

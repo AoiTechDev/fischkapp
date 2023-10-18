@@ -5,7 +5,7 @@ import "./App.css";
 import EditCard from "./components/Card/EditCard/EditCard";
 import { useContext, useState } from "react";
 import { CardContext } from "./context/StateContext";
-import Card from "./components/Card/Card/Card";
+import Card from "./components/Card/Card/NewCard";
 
 function App(): React.JSX.Element {
   const { cards, cardState } = useContext(CardContext);
