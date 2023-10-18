@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import styles from "./Card.module.css";
+import styles from "./NewCard.module.css";
 import Pen from "../Icons/Pen/Pen";
 import { CardContext } from "../../../context/StateContext";
 import CardWord from "../CardStages/CardWord/CardWord";
