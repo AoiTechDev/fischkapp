@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./NewCard.module.css";
 import Pen from "../Icons/Pen/Pen";
 import { CardContext } from "../../../context/StateContext";
@@ -14,8 +14,9 @@ interface Card {
 
 interface Props {
   card: Card;
+  index: number;
 }
-const Card = (props: Props) => {
+const NewCard = (props: Props) => {
   const { cards, updateCard, editCardHandler } = useContext(CardContext);
 
   const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
@@ -23,15 +24,40 @@ const Card = (props: Props) => {
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
   };
+
+  const cardFlipHandler = (id: number) => {
+    const card = document.querySelectorAll(`.card`);
+    const phrase = document.querySelectorAll(`.card .card__phrase`);
+
+    console.log(card[id]);
+    card.forEach((item) => item.classList.remove(styles.card_flip_animation));
+    phrase.forEach((item) =>
+      item.classList.remove(styles.card_phrase_animation)
+    );
+
+    setTimeout(() => {
+      card[id].classList.add(styles.card_flip_animation);
+      card[id].children[1].classList.add(styles.card_phrase_animation);
+    }, 10);
+
+    setTimeout(() => {
+      setIsFlipped((prev) => !prev);
+    }, 100);
+  };
+
+  const [isFlipped, setIsFlipped] = useState<boolean>(false);
+
+  useEffect(() => {});
   return (
     <div
-      className={
+      className={`${
         !props.card.isEdited
           ? styles.card__container
           : styles.card__container_edit
-      }
+      } card`}
+      onClick={() => cardFlipHandler(props.index)}
     >
-     {!props.card.isEdited ?  <Pen card={props.card} /> : null}
+      {!props.card.isEdited ? <Pen card={props.card} /> : null}
 
       {props.card.isEdited ? (
         (() => {
@@ -50,7 +76,7 @@ const Card = (props: Props) => {
             case "CARD_DEF":
               return (
                 <CardDef
-                card={props.card}
+                  card={props.card}
                   toggle={() => toggleInnerCardState("CARD_WORD")}
                   buttonEvent={() => {
                     toggleInnerCardState("CARD_WORD");
@@ -64,10 +90,12 @@ const Card = (props: Props) => {
           }
         })()
       ) : (
-        <p>{props.card.word}</p>
+        <p className="card__phrase">
+          {isFlipped ? props.card.word : props.card.definition}
+        </p>
       )}
     </div>
   );
 };
 
-export default Card;
+export default NewCard;

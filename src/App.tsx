@@ -5,7 +5,7 @@ import "./App.css";
 import EditCard from "./components/Card/EditCard/EditCard";
 import { useContext, useState } from "react";
 import { CardContext } from "./context/StateContext";
-import Card from "./components/Card/Card/NewCard";
+import NewCard from "./components/Card/Card/NewCard";
 
 function App(): React.JSX.Element {
   const { cards, cardState } = useContext(CardContext);
@@ -21,8 +21,8 @@ function App(): React.JSX.Element {
             case "CARD_ADDED":
               return (
                 <div className="card_container">
-                  {cards.toReversed().map((card) => (
-                    <Card card={card} key={card.id} />
+                  {cards.map((card, index) => (
+                    <NewCard card={card} key={card.id} index={index}/>
                   ))}
                 </div>
               );
@@ -32,8 +32,8 @@ function App(): React.JSX.Element {
                 <p className="empty">Add your first flashcard</p>
               ) : (
                 <div className="card_container">
-                  {cards.toReversed().map((card) => (
-                    <Card card={card} key={card.id} />
+                  {cards.map((card, index) => (
+                    <NewCard card={card} key={card.id} index={index}/>
                   ))}
                 </div>
               );

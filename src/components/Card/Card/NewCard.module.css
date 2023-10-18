@@ -1,5 +1,6 @@
 .card__container {
     width: 100%;
+    max-width: 350px;
     height: 11.75rem;
     background-color: var(--white);
     border-radius: 0.94rem;
@@ -25,4 +26,55 @@
     align-items: end;
     position: relative;
     padding: 0.88rem;
+}
+
+.no_animation {
+    animation: none;
+}
+
+.card_flip_animation {
+    animation: flip 0.7s ease !important;
+}
+.card_phrase_animation{
+    animation: wordAnimation 0.8s ease;
+}
+
+@keyframes wordAnimation {
+    0% {
+        transform: translate3d(0,0,0);
+        opacity: 1;
+    }
+    5%{
+        transform: translate3d(0,100%,0);
+        opacity: 0;
+    }
+    95%{
+        transform: translate3d(0,100%,0);
+        opacity: 0;
+    }
+    100% {
+        transform: translate3d(0,0,0);
+        opacity: 1;
+       
+    }
+}
+
+@keyframes flip {
+    0% {
+        width: 100%;
+        opacity: 1;
+    }
+    40% {
+        width: 10px;
+        opacity: 0.2;
+        transform: rotateY(0deg);
+    }
+    60% {
+        transform: rotateY(180deg);
+    }
+
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
 }
