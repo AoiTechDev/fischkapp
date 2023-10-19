@@ -9,15 +9,23 @@ import NewCard from "./components/Card/Card/NewCard";
 
 function App(): React.JSX.Element {
   const { cards, cardState, setCards } = useContext(CardContext);
+  const [loading, setLoading] = useState(false);
+ 
 
   useEffect(() => {
+    setLoading(true);
     async function fetchData() {
       try {
         fetch("https://training.nerdbord.io/api/v1/fischkapp/flashcards")
           .then((res) => res.json())
-          .then((data) => setCards(data));
+          .then((data) => {
+            setCards(data);
+            setLoading(false);
+          });
       } catch (err) {
         console.error(err);
+        
+        setLoading(false);
       }
     }
     fetchData();
@@ -26,7 +34,7 @@ function App(): React.JSX.Element {
   return (
     <AppLayout>
       <AppHeader cardsAmount={cards.length} />
-      <main>
+     {!loading ? <main>
         {(() => {
           switch (cardState) {
             case "CARD_INIT":
@@ -35,7 +43,7 @@ function App(): React.JSX.Element {
               return (
                 <div className="card_container">
                   {cards.toReversed().map((card, index) => (
-                    <NewCard card={card} key={card._id} index={index}/>
+                    <NewCard card={card} key={card._id} index={index} />
                   ))}
                 </div>
               );
@@ -46,13 +54,13 @@ function App(): React.JSX.Element {
               ) : (
                 <div className="card_container">
                   {cards.toReversed().map((card, index) => (
-                    <NewCard card={card} key={card._id} index={index}/>
+                    <NewCard card={card} key={card._id} index={index} />
                   ))}
                 </div>
               );
           }
         })()}
-      </main>
+      </main> : <h1>Fetching data...</h1>}
     </AppLayout>
   );
 }
