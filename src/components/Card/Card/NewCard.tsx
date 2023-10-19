@@ -1,22 +1,9 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useRef,
-  LegacyRef,
-} from "react";
+import { useContext, useState, useRef } from "react";
 import styles from "./NewCard.module.css";
 import Pen from "../Icons/Pen/Pen";
-import { CardContext } from "../../../context/StateContext";
+import { CardContext, Card } from "../../../context/StateContext";
 import CardWord from "../CardStages/CardWord/CardWord";
 import CardDef from "../CardStages/CardDef/CardDef";
-
-interface Card {
-  id: number;
-  word: string;
-  definition: string;
-  isEdited: boolean;
-}
 
 interface Props {
   card: Card;
@@ -34,18 +21,21 @@ const NewCard = (props: Props) => {
     setInnerCardState(state);
   };
 
-  const cardFlipHandler = (id: number) => {
-    cardRef.current?.classList.remove(styles.card_flip_animation);
-    phraseRef.current?.classList.remove(styles.card_phrase_animation);
+  const cardFlipHandler = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      cardRef.current?.classList.remove(styles.card_flip_animation);
+      phraseRef.current?.classList.remove(styles.card_phrase_animation);
 
-    setTimeout(() => {
-      cardRef.current?.classList.add(styles.card_flip_animation);
-      cardRef.current?.children[1].classList.add(styles.card_phrase_animation);
-    }, 10);
-
-    setTimeout(() => {
-      setIsFlipped((prev) => !prev);
-    }, 100);
+      setTimeout(() => {
+        cardRef.current?.classList.add(styles.card_flip_animation);
+        cardRef.current?.children[1].classList.add(
+          styles.card_phrase_animation
+        );
+      }, 10);
+      setTimeout(() => {
+        setIsFlipped((prev) => !prev);
+      }, 100);
+    }
   };
 
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
@@ -57,7 +47,7 @@ const NewCard = (props: Props) => {
           ? styles.card__container
           : styles.card__container_edit
       }
-      onClick={() => cardFlipHandler(props.index)}
+      onClick={(e) => (!props.card.isEdited ? cardFlipHandler(e) : null)}
       ref={cardRef}
     >
       {!props.card.isEdited ? <Pen card={props.card} /> : null}
@@ -70,7 +60,7 @@ const NewCard = (props: Props) => {
                 <CardWord
                   card={props.card}
                   toggle={() => toggleInnerCardState("CARD_DEF")}
-                  wordValue={props.card.word}
+                  wordValue={props.card.front}
                   onChange={(e) => editCardHandler(props.card, e)}
                   cancel={() => updateCard(props?.card!, false)}
                 />
@@ -85,17 +75,15 @@ const NewCard = (props: Props) => {
                     toggleInnerCardState("CARD_WORD");
                     updateCard(props.card, false);
                   }}
-                  defValue={props.card.definition}
-                  wordValue={props.card.word}
+                  defValue={props.card.back}
+                  wordValue={props.card.front}
                   onChange={(e) => editCardHandler(props.card, e)}
                 />
               );
           }
         })()
       ) : (
-        <p ref={phraseRef}>
-          {isFlipped ? props.card.word : props.card.definition}
-        </p>
+        <p ref={phraseRef}>{!isFlipped ? props.card.front : props.card.back}</p>
       )}
     </div>
   );

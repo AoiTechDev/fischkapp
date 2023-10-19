@@ -1,15 +1,8 @@
 import React, { useContext } from "react";
 import styles from "./CardWord.module.css";
-import { CardContext } from "../../../../context/StateContext";
+import { CardContext, Card } from "../../../../context/StateContext";
 import Button from "../../../Button/Button";
-import Trashcan from "../../Icons/Trashcan/Trashcan";
 
-interface Card {
-  id: number;
-  word: string;
-  definition: string;
-  isEdited: boolean;
-}
 
 interface Props {
   card?: Card;
@@ -25,18 +18,14 @@ const CardWord = (props: Props) => {
   return (
     <>
       <input
-        name="word"
+        name="front"
         value={props.wordValue}
         onChange={props.onChange}
         className={styles.card__input}
       />
       <div>
         <div className={styles.card__button_container}>
-          <Button
-            label="Cancel"
-            color="white"
-            event={props.cancel}
-          />
+          <Button label="Cancel" color="white" event={props.cancel} />
           <Button label="Next" color="var(--accent)" event={props.toggle} />
         </div>
       </div>

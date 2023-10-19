@@ -1,17 +1,11 @@
 import React, { useContext } from "react";
 import Trashcan from "../../Icons/Trashcan/Trashcan";
 import styles from "./CardDef.module.css";
-import { CardContext } from "../../../../context/StateContext";
+import { CardContext, Card } from "../../../../context/StateContext";
 import Button from "../../../Button/Button";
-interface Card {
-  id: number;
-  word: string;
-  definition: string;
-  isEdited: boolean;
-}
 
 interface Props {
-  card?: Card;
+  card: Card;
   toggle: React.MouseEventHandler<HTMLButtonElement>;
   buttonEvent: React.MouseEventHandler<HTMLButtonElement>;
   defValue: string;
@@ -23,10 +17,10 @@ const CardDef = (props: Props) => {
   return (
     <>
       <>
-        <Trashcan index={props?.card?.id!} />
+        <Trashcan card={props.card} />
         <p className={styles.card__smallText}>{props.wordValue}</p>
         <input
-          name="definition"
+          name="back"
           value={props.defValue}
           onChange={props.onChange}
           className={styles.card__input}
