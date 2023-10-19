@@ -3,13 +3,26 @@ import { AppLayout } from "./components/Layout/AppLayout";
 
 import "./App.css";
 import EditCard from "./components/Card/EditCard/EditCard";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CardContext } from "./context/StateContext";
 import NewCard from "./components/Card/Card/NewCard";
 
 function App(): React.JSX.Element {
-  const { cards, cardState } = useContext(CardContext);
-  console.log(cards)
+  const { cards, cardState, setCards } = useContext(CardContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        fetch("https://training.nerdbord.io/api/v1/fischkapp/flashcards")
+          .then((res) => res.json())
+          .then((data) => setCards(data));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <AppLayout>
       <AppHeader cardsAmount={cards.length} />

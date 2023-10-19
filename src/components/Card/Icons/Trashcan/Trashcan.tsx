@@ -23,7 +23,7 @@ const Trashcan = (props: Props) => {
       <path
         d="M15 19V27H25C25 26.2727 25 19 25 19"
         stroke="#161616"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
     </svg>
   );

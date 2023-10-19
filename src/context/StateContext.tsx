@@ -21,6 +21,7 @@ interface CardContextValue {
   editCardHandler: (card: Card, e: React.ChangeEvent<HTMLInputElement>) => void;
   newCardHandler: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void;
   cards: Card[];
+  setCards: Dispatch<SetStateAction<Card[]>>;
   addCard: (card: Card, id: string) => void;
   removeCard: (card: Card) => void;
 
@@ -35,10 +36,11 @@ interface CardContextValue {
 const defaultValue: CardContextValue = {
   card: { _id: '', front: "", back: "", isEdited: false },
   setCard: () => {},
-
+  setCards: () => {},
   editCardHandler: () => {},
   newCardHandler: () => {},
-  cards: [],
+  cards: [] = [],
+  
   addCard: () => {},
   removeCard: () => {},
   updateCard: () => {},
@@ -58,18 +60,7 @@ export default function CardProvider({ children }: { children: ReactNode }) {
   const [cardState, setCardState] = useState<string>("");
   const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        fetch("https://training.nerdbord.io/api/v1/fischkapp/flashcards")
-          .then((res) => res.json())
-          .then((data) => setCards(data));
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchData();
-  }, []);
+  
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
   };
@@ -128,6 +119,7 @@ export default function CardProvider({ children }: { children: ReactNode }) {
       value={{
         card,
         setCard,
+        setCards,
         cards,
         addCard,
         removeCard,
