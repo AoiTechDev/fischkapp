@@ -1,14 +1,8 @@
 import { useContext } from "react";
 import { CardContext } from "../../../../context/StateContext";
 import styles from "./Pen.module.css";
+import {Card} from "../../../../context/StateContext";
 
-
-interface Card {
-  id: number;
-  word: string;
-  definition: string;
-  isEdited: boolean;
-}
 
 interface Props{
   card: Card

@@ -4,12 +4,14 @@ import {
   Dispatch,
   SetStateAction,
   ReactNode,
+  useEffect,
+  useId,
 } from "react";
 
-interface Card {
-  id: number;
-  word: string;
-  definition: string;
+export interface Card {
+  _id: string;
+  front: string;
+  back: string;
   isEdited: boolean;
 }
 
@@ -17,10 +19,10 @@ interface CardContextValue {
   card: Card;
   setCard: Dispatch<SetStateAction<Card>>;
   editCardHandler: (card: Card, e: React.ChangeEvent<HTMLInputElement>) => void;
-  newCardHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  newCardHandler: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void;
   cards: Card[];
-  addCard: (card: Card) => void;
-  removeCard: (id: number) => void;
+  addCard: (card: Card, id: string) => void;
+  removeCard: (card: Card) => void;
 
   updateCard: (card: Card, editSwitch: boolean) => void;
 
@@ -31,15 +33,12 @@ interface CardContextValue {
 }
 
 const defaultValue: CardContextValue = {
-  card: { id: 0, word: "", definition: "", isEdited: false },
+  card: { _id: '', front: "", back: "", isEdited: false },
   setCard: () => {},
 
   editCardHandler: () => {},
   newCardHandler: () => {},
-  cards: [
-    { id: 0, word: "fish", definition: "ryba", isEdited: false },
-    { id: 1, word: "dog", definition: "pies", isEdited: false },
-  ],
+  cards: [],
   addCard: () => {},
   removeCard: () => {},
   updateCard: () => {},
@@ -59,22 +58,34 @@ export default function CardProvider({ children }: { children: ReactNode }) {
   const [cardState, setCardState] = useState<string>("");
   const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        fetch("https://training.nerdbord.io/api/v1/fischkapp/flashcards")
+          .then((res) => res.json())
+          .then((data) => setCards(data));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchData();
+  }, []);
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
   };
 
-  const addCard = (newCard: Card) => {
+  const addCard = (newCard: Card, id: string) => {
     setCards((prev) => [...prev, newCard]);
-    setCard({ id: 0, word: "", definition: "", isEdited: false });
+    setCard({ _id: id, front: "", back: "", isEdited: false });
     setCardState("CARD_ADDED");
     setInnerCardState("CARD_WORD");
   };
 
-  const newCardHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const newCardHandler = (e: React.ChangeEvent<HTMLInputElement>, id: string): void => {
     setCard((prev) => {
       return {
-        ...prev,
-        id: cards.length,
+        ...prev,  
+        _id: id,
         [e.target.name]: e.target.value,
       };
     });
@@ -85,7 +96,7 @@ export default function CardProvider({ children }: { children: ReactNode }) {
   ) => {
     const { name, value } = e.target;
 
-    const existingCardIndex = cards.findIndex((c) => c.id === card.id);
+    const existingCardIndex = cards.findIndex((c) => c._id === card._id);
 
     if (existingCardIndex >= 0) {
       // Card exists, update it
@@ -98,14 +109,14 @@ export default function CardProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const removeCard = (id: number) => {
-    setCards((prev) => prev.filter((c) => c.id !== id));
+  const removeCard = (card: Card) => {
+    setCards((prev) => prev.filter((c) => c._id !== card._id));
   };
 
   const updateCard = (card: Card, editSwitch: boolean) => {
-    let findCard = cards.find((item) => item.id === card.id);
-    let newCard = cards.filter((item) => item.id !== findCard?.id);
-
+    let findCard = cards.find((item) => item._id === card._id);
+    let newCard = cards.filter((item) => item._id !== findCard?._id);
+    console.log(findCard)
     setCards([...newCard, { ...findCard!, isEdited: editSwitch }]);
   };
   const toggleCardState = (state: string) => {

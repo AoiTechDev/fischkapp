@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import styles from "./Trashcan.module.css";
-import { CardContext } from "../../../../context/StateContext";
+import { CardContext,Card } from "../../../../context/StateContext";
 
 interface Props{
-  index: number
+  card: Card
 }
 
 const Trashcan = (props: Props) => {
@@ -16,7 +16,7 @@ const Trashcan = (props: Props) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={styles.trashcan}
-      onClick={() => {removeCard(props.index)}}
+      onClick={() => {removeCard(props.card)}}
     >
       <path d="M25 15.5H15" stroke="#161616" stroke-linecap="round" />
       <path d="M22 15H18" stroke="#161616" stroke-linecap="round" />

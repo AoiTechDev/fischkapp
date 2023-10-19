@@ -1,26 +1,32 @@
-import React, { useContext, useState } from "react";
+import { useContext, useId, useState } from "react";
 import styles from "./EditCard.module.css";
-import Pen from "../Icons/Pen/Pen";
-import { useId } from "react";
+
+
 import { CardContext } from "../../../context/StateContext";
-import Button from "../../Button/Button";
-import Trashcan from "../Icons/Trashcan/Trashcan";
+
 import CardWord from "../CardStages/CardWord/CardWord";
 import CardDef from "../CardStages/CardDef/CardDef";
 
-interface Card {
-  id: number;
-  word: string;
-  definition: string;
-  isEdited: boolean;
-}
+
 const EditCard = () => {
   const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
   const { card, addCard, newCardHandler ,toggleCardState} = useContext(CardContext);
+  
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
   };
+  function dec2hex (dec: number) {
+    return dec.toString(16).padStart(2, "0")
+  }
 
+  function generateId (len: number) {
+    var arr = new Uint8Array((len || 40) / 2)
+    window.crypto.getRandomValues(arr)
+    return Array.from(arr, dec2hex).join('')
+  }
+  
+  const id = generateId(25)
+  console.log(typeof id)
   return (
     <div className={styles.card__container}>
       {(() => {
@@ -29,8 +35,8 @@ const EditCard = () => {
             return (
               <CardWord
                 toggle={() => toggleInnerCardState("CARD_DEF")}
-                wordValue={card.word}
-                onChange={newCardHandler}
+                wordValue={card.front}
+                onChange={(e) => newCardHandler(e, id)}
                 cancel={() => toggleCardState("")}
               />
             );
@@ -40,10 +46,10 @@ const EditCard = () => {
               <CardDef
               
                 toggle={() => toggleInnerCardState("CARD_WORD")}
-                buttonEvent={() => addCard(card)}
-                defValue={card.definition}
-                wordValue={card.word}
-                onChange={newCardHandler}
+                buttonEvent={() => addCard(card, id)}
+                defValue={card.back}
+                wordValue={card.front}
+                onChange={(e) => newCardHandler(e, id)}
               />
             );
         }
