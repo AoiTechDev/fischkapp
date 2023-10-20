@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import styles from "./CardWord.module.css";
+import styles from "./CardFront.module.css";
 import { CardContext, Card } from "../../../../context/StateContext";
 import Button from "../../../Button/Button";
 
@@ -11,7 +11,7 @@ interface Props {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   cancel: React.MouseEventHandler<HTMLButtonElement>;
 }
-const CardWord = (props: Props) => {
+const CardFront = (props: Props) => {
   const { cards, card, toggleCardState, toggleInnerCardState, updateCard } =
     useContext(CardContext);
 
@@ -33,4 +33,4 @@ const CardWord = (props: Props) => {
   );
 };
 
-export default CardWord;
+export default CardFront;

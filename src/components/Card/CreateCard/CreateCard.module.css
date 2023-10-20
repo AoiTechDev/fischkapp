@@ -1,5 +1,6 @@
 .card__container {
     width: 100%;
+    max-width: 350px;
     height: 11.75rem;
     background-color: var(--white);
     border-radius: 0.94rem;
@@ -9,6 +10,7 @@
     align-items: end;
     position: relative;
     padding: 0.88rem;
+    margin: auto;
 }
 .card__button_container {
     display: flex;

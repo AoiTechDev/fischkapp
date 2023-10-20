@@ -17,6 +17,7 @@
 }
 .card__container_edit {
     width: 100%;
+    max-width: 350px;
     height: 11.75rem;
     background-color: var(--white);
     border-radius: 0.94rem;

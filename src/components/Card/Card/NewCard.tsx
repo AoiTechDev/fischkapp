@@ -2,12 +2,12 @@ import { useContext, useState, useRef } from "react";
 import styles from "./NewCard.module.css";
 import Pen from "../Icons/Pen/Pen";
 import { CardContext, Card } from "../../../context/StateContext";
-import CardWord from "../CardStages/CardWord/CardWord";
-import CardDef from "../CardStages/CardDef/CardDef";
+import CardWord from "../CardStages/CardWord/CardFront";
+import CardDef from "../CardStages/CardDef/CardBack";
 
 interface Props {
   card: Card;
-  index: number;
+  index?: number;
 }
 const NewCard = (props: Props) => {
   const { cards, updateCard, editCardHandler } = useContext(CardContext);
@@ -15,7 +15,7 @@ const NewCard = (props: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const phraseRef = useRef<HTMLParagraphElement>(null);
 
-  const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
+  const [innerCardState, setInnerCardState] = useState<string>("CARD_FRONT");
 
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
@@ -55,24 +55,24 @@ const NewCard = (props: Props) => {
       {props.card.isEdited ? (
         (() => {
           switch (innerCardState) {
-            case "CARD_WORD":
+            case "CARD_FRONT":
               return (
                 <CardWord
                   card={props.card}
-                  toggle={() => toggleInnerCardState("CARD_DEF")}
+                  toggle={() => toggleInnerCardState("CARD_BACK")}
                   wordValue={props.card.front}
                   onChange={(e) => editCardHandler(props.card, e)}
                   cancel={() => updateCard(props?.card!, false)}
                 />
               );
 
-            case "CARD_DEF":
+            case "CARD_BACK":
               return (
                 <CardDef
                   card={props.card}
-                  toggle={() => toggleInnerCardState("CARD_WORD")}
+                  toggle={() => toggleInnerCardState("CARD_FRONT")}
                   buttonEvent={() => {
-                    toggleInnerCardState("CARD_WORD");
+                    toggleInnerCardState("CARD_FRONT");
                     updateCard(props.card, false);
                   }}
                   defValue={props.card.back}

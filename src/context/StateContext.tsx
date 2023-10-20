@@ -31,6 +31,8 @@ interface CardContextValue {
   toggleCardState: (state: string) => void;
   innerCardState: string;
   toggleInnerCardState: (state: string) => void;
+
+
 }
 
 const defaultValue: CardContextValue = {
@@ -50,6 +52,7 @@ const defaultValue: CardContextValue = {
 
   innerCardState: "",
   toggleInnerCardState: () => {},
+
 };
 
 export const CardContext = createContext(defaultValue);
@@ -58,18 +61,19 @@ export default function CardProvider({ children }: { children: ReactNode }) {
   const [card, setCard] = useState<Card>(defaultValue.card);
   const [cards, setCards] = useState<Card[]>(defaultValue.cards);
   const [cardState, setCardState] = useState<string>("");
-  const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
+  const [innerCardState, setInnerCardState] = useState<string>("CARD_FRONT");
 
   
   const toggleInnerCardState = (state: string) => {
     setInnerCardState(state);
   };
 
+
   const addCard = (newCard: Card, id: string) => {
     setCards((prev) => [...prev, newCard]);
     setCard({ _id: id, front: "", back: "", isEdited: false });
     setCardState("CARD_ADDED");
-    setInnerCardState("CARD_WORD");
+    setInnerCardState("CARD_FRONT");
   };
 
   const newCardHandler = (e: React.ChangeEvent<HTMLInputElement>, id: string): void => {
@@ -96,6 +100,7 @@ export default function CardProvider({ children }: { children: ReactNode }) {
         ...updatedCards[existingCardIndex],
         [name]: value,
       };
+      
       setCards(updatedCards);
     }
   };

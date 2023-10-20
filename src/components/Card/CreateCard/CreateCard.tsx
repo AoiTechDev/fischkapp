@@ -1,15 +1,16 @@
 import { useContext, useId, useState } from "react";
-import styles from "./EditCard.module.css";
+import styles from "./CreateCard.module.css";
 
 
 import { CardContext } from "../../../context/StateContext";
 
-import CardWord from "../CardStages/CardWord/CardWord";
-import CardDef from "../CardStages/CardDef/CardDef";
+
+import CardFront from "../CardStages/CardWord/CardFront";
+import CardBack from "../CardStages/CardDef/CardBack";
 
 
-const EditCard = () => {
-  const [innerCardState, setInnerCardState] = useState<string>("CARD_WORD");
+const CreateCard = () => {
+  const [innerCardState, setInnerCardState] = useState<string>("CARD_FRONT");
   const { card, addCard, newCardHandler ,toggleCardState} = useContext(CardContext);
   
   const toggleInnerCardState = (state: string) => {
@@ -24,28 +25,28 @@ const EditCard = () => {
     window.crypto.getRandomValues(arr)
     return Array.from(arr, dec2hex).join('')
   }
-  
   const id = generateId(25)
-  console.log(typeof id)
+
+
   return (
     <div className={styles.card__container}>
       {(() => {
         switch (innerCardState) {
-          case "CARD_WORD":
+          case "CARD_FRONT":
             return (
-              <CardWord
-                toggle={() => toggleInnerCardState("CARD_DEF")}
+              <CardFront
+                toggle={() => toggleInnerCardState("CARD_BACK")}
                 wordValue={card.front}
                 onChange={(e) => newCardHandler(e, id)}
                 cancel={() => toggleCardState("")}
               />
             );
 
-          case "CARD_DEF":
+          case "CARD_BACK":
             return (
-              <CardDef
+              <CardBack
               
-                toggle={() => toggleInnerCardState("CARD_WORD")}
+                toggle={() => toggleInnerCardState("CARD_FRONT")}
                 buttonEvent={() => addCard(card, id)}
                 defValue={card.back}
                 wordValue={card.front}
@@ -58,4 +59,4 @@ const EditCard = () => {
   );
 };
 
-export default EditCard;
+export default CreateCard;

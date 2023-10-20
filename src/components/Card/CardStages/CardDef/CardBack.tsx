@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Trashcan from "../../Icons/Trashcan/Trashcan";
-import styles from "./CardDef.module.css";
+import styles from "./CardBack.module.css";
 import { CardContext, Card } from "../../../../context/StateContext";
 import Button from "../../../Button/Button";
 
@@ -12,7 +12,7 @@ interface Props {
   wordValue: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
-const CardDef = (props: Props) => {
+const CardBack = (props: Props) => {
   const { card, cards } = useContext(CardContext);
   return (
     <>
@@ -41,4 +41,4 @@ const CardDef = (props: Props) => {
   );
 };
 
-export default CardDef;
+export default CardBack;
