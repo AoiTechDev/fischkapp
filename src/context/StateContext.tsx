@@ -64,29 +64,23 @@ export default function CardProvider({ children }: { children: ReactNode }) {
     setInnerCardState(state);
   };
 
-  async function postJSON(data: Card) {
+  async function postCard(data: Card) {
     try {
-      const response = await fetch(
-        "https://training.nerdbord.io/api/v1/fischkapp/flashcards",
-        {
-          method: "POST", // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "secret_token",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      const result = await response.json();
-      console.log("Success:", result);
+      await fetch("https://training.nerdbord.io/api/v1/fischkapp/flashcards", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "secret_token",
+        },
+        body: JSON.stringify(data),
+      });
     } catch (error) {
       console.error("Error:", error);
     }
   }
 
   const addCard = (newCard: Card, id: string) => {
-    postJSON(newCard)
+    postCard(newCard);
     setCards((prev) => [...prev, newCard]);
     setCard({ _id: id, front: "", back: "", isEdited: false });
     setCardState("CARD_ADDED");
