@@ -79,6 +79,28 @@ export default function CardProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function deleteFlashcard(id: string ): Promise<void> {
+    const apiUrl = `https://training.nerdbord.io/api/v1/fischkapp/flashcards/${id}`;
+  
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'secret_token',
+        },
+      });
+  
+      if (response.status === 204) {
+        console.log('Flashcard deleted successfully.');
+      } else {
+        console.error('Failed to delete flashcard. Status:', response.status);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
+
+  
   const addCard = (newCard: Card, id: string) => {
     postCard(newCard);
     setCards((prev) => [...prev, newCard]);
@@ -122,6 +144,9 @@ export default function CardProvider({ children }: { children: ReactNode }) {
 
   const removeCard = (card: Card) => {
     setCards((prev) => prev.filter((c) => c._id !== card._id));
+    console.log(card._id)
+    deleteFlashcard(card._id)
+
   };
 
   const updateCard = (card: Card, editSwitch: boolean) => {
