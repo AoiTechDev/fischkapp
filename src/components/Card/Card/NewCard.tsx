@@ -38,6 +38,39 @@ const NewCard = (props: Props) => {
     }
   };
 
+  function updateFlashcard(card: Card) {
+    const url = `https://training.nerdbord.io/api/v1/fischkapp/flashcards/${card._id}`;
+    const authToken = "secret_token";
+
+    const data = {
+      _id: "123",
+      front: "What is life?",
+      back: "I have no idea.",
+    };
+
+    fetch(url, {
+      method: "PATCH",
+      headers: {
+        Authorization: authToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Response was not ok");
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log("Success:", responseData);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
 
   return (
@@ -74,6 +107,7 @@ const NewCard = (props: Props) => {
                   buttonEvent={() => {
                     toggleInnerCardState("CARD_FRONT");
                     updateCard(props.card, false);
+                    updateFlashcard(props.card)
                   }}
                   defValue={props.card.back}
                   wordValue={props.card.front}

@@ -79,6 +79,8 @@ export default function CardProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  
+
   const addCard = (newCard: Card, id: string) => {
     postCard(newCard);
     setCards((prev) => [...prev, newCard]);
@@ -127,7 +129,7 @@ export default function CardProvider({ children }: { children: ReactNode }) {
   const updateCard = (card: Card, editSwitch: boolean) => {
     let findCard = cards.find((item) => item._id === card._id);
     let newCard = cards.filter((item) => item._id !== findCard?._id);
-    console.log(findCard);
+  
     setCards([...newCard, { ...findCard!, isEdited: editSwitch }]);
   };
   const toggleCardState = (state: string) => {
