@@ -1,6 +1,7 @@
 {
     "include": [
-      "./src/**/*",
+      // "./src/**/*",
+      "src/**/*.ts", "src/**/*.tsx",
       "declaration.d.ts"
   ],
     "$schema": "https://json.schemastore.org/tsconfig",
@@ -9,9 +10,9 @@
   
     "compilerOptions": {
       "lib": ["dom", "dom.iterable", "esnext"],
-      "module": "esnext",
-      "moduleResolution": "bundler",
-      "target": "es2015",
+      "module": "CommonJS",
+      // "moduleResolution": "bundler",
+      "target": "ES6",
   
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
