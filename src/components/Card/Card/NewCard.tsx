@@ -44,14 +44,14 @@ const NewCard = (props: Props) => {
 
     const data = {
       _id: "123",
-      front: "What is life?",
-      back: "I have no idea.",
+      front: card.front,
+      back: card.back,
     };
 
     fetch(url, {
       method: "PATCH",
       headers: {
-        Authorization: authToken,
+        Authorization: authToken, 
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
