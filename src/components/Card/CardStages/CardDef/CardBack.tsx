@@ -5,7 +5,7 @@ import { CardContext, Card } from "../../../../context/StateContext";
 import Button from "../../../Button/Button";
 
 interface Props {
-  card: Card;
+  card?: Card;
   toggle: React.MouseEventHandler<HTMLButtonElement>;
   buttonEvent: React.MouseEventHandler<HTMLButtonElement>;
   defValue: string;
@@ -13,11 +13,12 @@ interface Props {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 const CardBack = (props: Props) => {
-  const { card, cards } = useContext(CardContext);
+ 
   return (
     <>
+   
       <>
-        <Trashcan card={props.card} />
+        <Trashcan card={props.card!} />
         <p className={styles.card__smallText}>{props.wordValue}</p>
         <input
           name="back"

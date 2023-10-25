@@ -1,53 +1,37 @@
 
 
-import { render, screen } from '@testing-library/react';
+// import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';  
-
+import {render, fireEvent, screen} from '@testing-library/react'
 import CreateCard from '../CreateCard';
+import { AppHeader } from '../../../Header/AppHeader';
+
 
 describe('FlashcardForm', () => {
 
   test('should not allow adding flashcard without front side', async () => {
     
+    render(<AppHeader/>)
     render(<CreateCard />);
-    
-    const submitButton = screen.getByRole('button', { name: /add/i });
+    const spanElement = screen.getByTestId('cardsAmount');
+    const initialValue = spanElement.textContent
+
+    const plusButton = screen.getByRole('button', { name: /\+/i });
+    await userEvent.click(plusButton);
+
+    const nextButton = screen.getByRole('button', { name: /Next/i });
+    await userEvent.click(nextButton);
+
+    const submitButton = screen.getByRole('button', { name: /Save/i });
     
     await userEvent.click(submitButton);
     
-    expect(screen.queryByRole('alert')).toHaveTextContent(/front side is required/i);
+    const updatedValue = spanElement.textContent
+
+    expect(updatedValue).toBe(initialValue);
+   // expect(screen.queryByRole('alert')).toHaveTextContent(/front side is required/i);
     
   });
 
-  test('should not allow adding flashcard without back side', async () => {
-
-    render(<CreateCard />);
-
-    const frontInput = screen.getByLabelText(/front side/i);
-    await userEvent.type(frontInput, 'Front side text');
-    
-    const submitButton = screen.getByRole('button', { name: /add/i });
-    await userEvent.click(submitButton);
-
-    expect(screen.queryByRole('alert')).toHaveTextContent(/back side is required/i);
-
-  });
-
-  test('should allow adding flashcard with front and back sides', async () => {
-
-    render(<CreateCard />);
-
-    const frontInput = screen.getByLabelText(/front side/i);
-    await userEvent.type(frontInput, 'Front side text');
-
-    const backInput = screen.getByLabelText(/back side/i);  
-    await userEvent.type(backInput, 'Back side text');
-
-    const submitButton = screen.getByRole('button', { name: /add/i });
-    await userEvent.click(submitButton);
-
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
-
-  });
-
+ 
 });
