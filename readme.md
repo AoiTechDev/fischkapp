@@ -1,9 +1,12 @@
 
-# Fishkapp Project Readme
+# Fishkapp
 
 ## Project Overview
 
 Welcome to the Fishkapp Project! This initiative empowers you to craft, modify, and remove fishkapps seamlessly. These fishkapps find their home in both an external API and a database, establishing a centralized and efficient system for their management. The project originated during a free period within the https://www.nerdbord.io/ community, where we were presented with the design and tasks to fulfill. I took on the responsibility of writing the entire project independently. Additionally, my code underwent a thorough review process, with Jakub and AI providing constructive feedback during the pull request evaluation.
+
+## Project site
+https://bornikowski-fishkapp.netlify.app/
 
 <h2 align="left">Tech stack</h2>
 
